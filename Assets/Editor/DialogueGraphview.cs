@@ -2,6 +2,7 @@ using UnityEngine.UIElements;
 using UnityEditor;
 using UnityEngine;
 using UnityEditor.Experimental.GraphView;
+using System.Collections.Generic;
 
 namespace DialogueEditor
 {
@@ -40,9 +41,17 @@ namespace DialogueEditor
             SetupZoom(ContentZoomer.DefaultMinScale, ContentZoomer.DefaultMaxScale);
 
             // Right click window
-            ContextualMenuManipulator contextMenu = new ContextualMenuManipulator(
-                menuEvent => menuEvent.menu.AppendAction("Add dialogue node", actionEvent => AddElement(AddNode(actionEvent.eventInfo.localMousePosition))));
-            this.AddManipulator(contextMenu);
+            ContextualMenuManipulator singleContextMenu = new ContextualMenuManipulator(
+                menuEvent => menuEvent.menu.AppendAction("Add Dialogue Node", 
+                actionEvent => AddElement(AddNode(DialogueNodeType.SINGLE, 
+                viewTransform.matrix.inverse.MultiplyPoint(actionEvent.eventInfo.localMousePosition)))));
+            this.AddManipulator(singleContextMenu);
+
+            ContextualMenuManipulator multipleContextMenu = new ContextualMenuManipulator(
+                menuEvent => menuEvent.menu.AppendAction("Add Dialogue Reply Node", 
+                actionEvent => AddElement(AddNode(DialogueNodeType.MULTIPLE, 
+                viewTransform.matrix.inverse.MultiplyPoint(actionEvent.eventInfo.localMousePosition)))));
+            this.AddManipulator(multipleContextMenu);
 
             // Dragging nodes
             this.AddManipulator(new SelectionDragger());
@@ -51,14 +60,40 @@ namespace DialogueEditor
             this.AddManipulator(new RectangleSelector());
         }
 
-        private DialogueNode AddNode(Vector2 position)
+        private DialogueNode AddNode(DialogueNodeType type, Vector2 position)
         {
-            DialogueNode newNode = new DialogueNode();
+            DialogueNode newNode;
+
+            if (type == DialogueNodeType.SINGLE)
+            {
+                newNode = new DialogueNodeSingle();
+            }
+            else
+            {
+                newNode = new DialogueNodeMultiple();
+            }
 
             newNode.Init(position);
             newNode.Draw();
 
             return newNode;
+        }
+
+        public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)
+        {
+            List<Port> compatiblePorts = new List<Port>();
+
+            ports.ForEach(port =>
+            {
+                if (startPort == port || startPort.node == port.node || startPort.direction == port.direction)
+                {
+                    return;
+                }
+
+                compatiblePorts.Add(port);
+            });
+
+            return compatiblePorts;
         }
     }
 }
