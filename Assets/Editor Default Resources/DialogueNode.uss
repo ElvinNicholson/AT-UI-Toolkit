@@ -1,0 +1,95 @@
+// Containers
+
+.de-node__extension-container
+{
+	background-color: #1D1D1D;
+	padding: 8px;
+}
+
+.de-node__visual-element
+{
+	background-color: #1D1D1D;
+	padding: 8px;
+	margin-left: 0px;
+	flex-grow: 1;
+}
+
+// Inputs
+
+.de-node__text-field > .unity-text-field__input
+{
+	background-color: #1D1D1E;
+	border-color: #27292C;
+	border-radius: 4px;
+	max-width: 240px;
+	min-width: 160px;
+	padding: 8px;
+	white-space: normal;
+}
+
+.de-node__text-field__hidden > .unity-text-field__input
+{
+	background-color: transparent;
+	border-color: transparent;
+}
+
+.de-node__text-field__hidden:focus > .unity-text-field__input
+{
+	background-color: #1D1D1E;
+	border-color: #27292C;
+}
+
+.de-node__name-text-field > .unity-text-field__input
+{
+	margin: 4px;
+	padding: 4px;
+}
+
+.de-node__dialogue-text-field > .unity-text-field__input
+{
+	background-color: #232527;
+	border-color: transparent;
+	border-left-color: #27292C;
+	border-left-width: 4px;
+	padding: 8px;
+	padding-left: 12px;
+	max-width: 600px;
+}
+
+.de-node__dialogue-text-field > .unity-text-field__input:hover
+{
+	background-color: #252729;
+}
+
+.de-node__dialogue-text-field:focus > .unity-text-field__input
+{
+	background-color: #1D1D1E;
+	border-color: #27292C;
+}
+
+.de-node__choice-text-field > .unity-text-field__input
+{
+	max-width: 535px;
+}
+
+.de-node__button
+{
+	background-color: #252729;
+	border-color: #1D1D1E;
+}
+
+.de-node__button:hover
+{
+	background-color: #2B2D2F;
+}
+
+.de-node__button:active
+{
+	background-color: #212325;
+}
+
+.de-node__output-port
+{
+	margin: auto;
+	margin-right: 0px;
+}
