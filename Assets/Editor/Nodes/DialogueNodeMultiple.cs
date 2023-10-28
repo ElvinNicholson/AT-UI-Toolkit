@@ -7,9 +7,13 @@ namespace DialogueEditor
 {
     public class DialogueNodeMultiple : DialogueNode
     {
-        public override void Init(Vector2 position)
+        private List<Port> portList;
+
+        public override void Init(GraphView graphViewRef, Vector2 position)
         {
-            base.Init(position);
+            base.Init(graphViewRef, position);
+
+            portList = new List<Port>();
         }
 
         public override void Draw()
@@ -54,6 +58,8 @@ namespace DialogueEditor
             Port outputPort = InstantiatePort(Orientation.Horizontal, Direction.Output, Port.Capacity.Single, typeof(bool));
             outputPort.portName = "";
             outputPort.AddToClassList("de-node__output-port");
+            portList.Add(outputPort);
+            removeButton.clicked += () => RemoveReply(outputPort);
 
             textVisualElement.Add(removeButton);
             textVisualElement.Add(replyTextField);
@@ -65,6 +71,22 @@ namespace DialogueEditor
         {
             replyList.Add("Dialogue Reply");
             AddChoiceElement(replyList[replyList.Count - 1]);
+        }
+
+        private void RemoveReply(Port port)
+        {
+            graphView.DeleteElements(port.connections);
+            portList.Remove(port);
+            extensionContainer.Remove(port.parent);
+        }
+
+        public override void DisconnectAllPort()
+        {
+            DisconnectPorts(inputContainer);
+            foreach (Port port in portList)
+            {
+                graphView.DeleteElements(port.connections);
+            }
         }
     }
 }

@@ -17,11 +17,14 @@ namespace DialogueEditor
         public string dialogueText { get; set; }
         public List<string> replyList { get; set; }
 
-        public virtual void Init(Vector2 position)
+        protected GraphView graphView;
+
+        public virtual void Init(GraphView graphViewRef, Vector2 position)
         {
             dialogueTitle = "Dialogue Title";
             dialogueText = "Dialogue Text";
             replyList = new List<string>();
+            graphView = graphViewRef;
 
             SetPosition(new Rect(position, Vector2.zero));
 
@@ -57,6 +60,25 @@ namespace DialogueEditor
             dialogueTextField.AddToClassList("de-node__dialogue-text-field");
             dialogueTextField.AddToClassList("de-node__text-field__hidden");
             extensionContainer.Add(dialogueTextField);
+        }
+
+        public virtual void DisconnectAllPort()
+        {
+            DisconnectPorts(inputContainer);
+            DisconnectPorts(outputContainer);
+        }
+
+        protected void DisconnectPorts(VisualElement portContainer)
+        {
+            foreach (Port port in portContainer.Children())
+            {
+                if (!port.connected)
+                {
+                    continue;
+                }
+
+                graphView.DeleteElements(port.connections);
+            }
         }
     }
 }

@@ -1,0 +1,35 @@
+Toolbar
+{
+	background-color: #1D1D1D;
+	height: 35px;
+}
+
+Textfield
+{
+	padding: 4px;
+}
+
+Label
+{
+	padding: 4px;
+	padding-left: 12px;
+	margin-top: auto;
+	margin-bottom: auto;
+}
+
+Button
+{
+	background-color: #27292C;
+	border-color: #1D1D1E;
+	min-height: 24px;
+}
+
+Button:hover
+{
+	background-color: #2B2D2F;
+}
+
+Button:active
+{
+	background-color: #212325;
+}

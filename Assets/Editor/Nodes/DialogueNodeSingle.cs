@@ -7,9 +7,9 @@ namespace DialogueEditor
 {
     public class DialogueNodeSingle : DialogueNode
     {
-        public override void Init(Vector2 position)
+        public override void Init(GraphView graphViewRef, Vector2 position)
         {
-            base.Init(position);
+            base.Init(graphViewRef, position);
         }
 
         public override void Draw()

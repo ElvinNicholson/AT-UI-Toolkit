@@ -1,4 +1,5 @@
 using UnityEngine.UIElements;
+using UnityEditor.UIElements;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
 using System;
@@ -16,6 +17,7 @@ namespace DialogueEditor
         private void OnEnable()
         {
             AddGraphview();
+            AddToolbar();
         }
 
         private void AddGraphview()
@@ -23,6 +25,28 @@ namespace DialogueEditor
             DialogueGraphview graphview = new DialogueGraphview();
             graphview.StretchToParentSize();
             rootVisualElement.Add(graphview);
+        }
+
+        private void AddToolbar()
+        {
+            Toolbar toolbar = new Toolbar();
+
+            Label fileNameLabel = new Label();
+            fileNameLabel.text = "File Name: ";
+
+            TextField fileNameTextField = new TextField();
+            fileNameTextField.value = "New Dialogue File";
+
+            Button saveButton = new Button();
+            saveButton.text = "Save";
+
+            toolbar.Add(fileNameLabel);
+            toolbar.Add(fileNameTextField);
+            toolbar.Add(saveButton);
+
+            toolbar.styleSheets.Add((StyleSheet)EditorGUIUtility.Load("DialogueToolbar.uss"));
+
+            rootVisualElement.Add(toolbar);
         }
     }
 }

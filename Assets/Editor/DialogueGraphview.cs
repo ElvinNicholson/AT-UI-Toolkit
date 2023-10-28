@@ -3,6 +3,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEditor.Experimental.GraphView;
 using System.Collections.Generic;
+using System;
 
 namespace DialogueEditor
 {
@@ -13,6 +14,8 @@ namespace DialogueEditor
             AddStyleSheet();
             AddBackground();
             AddControls();
+
+            OnElementsDeleted();
         }
 
         private void AddStyleSheet()
@@ -53,6 +56,12 @@ namespace DialogueEditor
                 viewTransform.matrix.inverse.MultiplyPoint(actionEvent.eventInfo.localMousePosition)))));
             this.AddManipulator(multipleContextMenu);
 
+            ContextualMenuManipulator groupContextMenu = new ContextualMenuManipulator(
+                menuEvent => menuEvent.menu.AppendAction("Create Group",
+                actionEvent => AddElement(CreateGroup("New Group",
+                viewTransform.matrix.inverse.MultiplyPoint(actionEvent.eventInfo.localMousePosition)))));
+            this.AddManipulator(groupContextMenu);
+
             // Dragging nodes
             this.AddManipulator(new SelectionDragger());
 
@@ -73,10 +82,19 @@ namespace DialogueEditor
                 newNode = new DialogueNodeMultiple();
             }
 
-            newNode.Init(position);
+            newNode.Init(this, position);
             newNode.Draw();
 
             return newNode;
+        }
+
+        private Group CreateGroup(string groupName, Vector2 position)
+        {
+            Group group = new Group();
+            group.title = groupName;
+            group.SetPosition(new Rect(position, Vector2.zero));
+
+            return group;
         }
 
         public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)
@@ -94,6 +112,29 @@ namespace DialogueEditor
             });
 
             return compatiblePorts;
+        }
+
+        private void OnElementsDeleted()
+        {
+            deleteSelection = (operationName, askUser) =>
+            {
+                List<DialogueNode> nodesToDelete = new List<DialogueNode>();
+
+                foreach (GraphElement element in selection)
+                {
+                    if (element is DialogueNode node)
+                    {
+                        nodesToDelete.Add(node);
+                        continue;
+                    }
+                }
+
+                foreach (DialogueNode node in nodesToDelete)
+                {
+                    node.DisconnectAllPort();
+                    RemoveElement(node);
+                }
+            };
         }
     }
 }
