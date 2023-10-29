@@ -40,9 +40,13 @@ namespace DialogueEditor
             Button saveButton = new Button();
             saveButton.text = "Save";
 
+            Button loadButton = new Button();
+            loadButton.text = "Load";
+
             toolbar.Add(fileNameLabel);
             toolbar.Add(fileNameTextField);
             toolbar.Add(saveButton);
+            toolbar.Add(loadButton);
 
             toolbar.styleSheets.Add((StyleSheet)EditorGUIUtility.Load("DialogueToolbar.uss"));
 

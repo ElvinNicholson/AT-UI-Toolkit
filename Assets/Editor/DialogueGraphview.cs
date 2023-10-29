@@ -56,12 +56,6 @@ namespace DialogueEditor
                 viewTransform.matrix.inverse.MultiplyPoint(actionEvent.eventInfo.localMousePosition)))));
             this.AddManipulator(multipleContextMenu);
 
-            ContextualMenuManipulator groupContextMenu = new ContextualMenuManipulator(
-                menuEvent => menuEvent.menu.AppendAction("Create Group",
-                actionEvent => AddElement(CreateGroup("New Group",
-                viewTransform.matrix.inverse.MultiplyPoint(actionEvent.eventInfo.localMousePosition)))));
-            this.AddManipulator(groupContextMenu);
-
             // Dragging nodes
             this.AddManipulator(new SelectionDragger());
 
