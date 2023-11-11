@@ -13,9 +13,8 @@ namespace DialogueEditor
 
     public class DialogueNode : Node
     {
-        public string dialogueTitle { get; set; }
+        public string dialogueTitle;
         public string dialogueText { get; set; }
-        public List<string> replyList { get; set; }
 
         protected GraphView graphView;
 
@@ -25,7 +24,6 @@ namespace DialogueEditor
         {
             dialogueTitle = "Dialogue Title";
             dialogueText = "Dialogue Text";
-            replyList = new List<string>();
             graphView = graphViewRef;
 
             SetPosition(new Rect(position, Vector2.zero));
@@ -62,12 +60,14 @@ namespace DialogueEditor
             dialogueTextField.AddToClassList("de-node__text-field");
             dialogueTextField.AddToClassList("de-node__dialogue-text-field");
             dialogueTextField.AddToClassList("de-node__text-field__hidden");
+            dialogueTextField.RegisterValueChangedCallback(evt => OnDialogueTextTextFieldValueChanged(evt.newValue));
             extensionContainer.Add(dialogueTextField);
         }
 
-        public virtual void Save()
+        public virtual DialogueNodeAsset Save()
         {
-
+            DialogueNodeAsset asset = new DialogueNodeAsset();
+            return asset;
         }
 
         public bool IsInputPortEmpty()
@@ -97,6 +97,11 @@ namespace DialogueEditor
         private void OnTitleTextFieldValueChanged(string newValue)
         {
             dialogueTitle = newValue;
+        }
+
+        private void OnDialogueTextTextFieldValueChanged(string newValue)
+        {
+            dialogueText = newValue;
         }
     }
 }

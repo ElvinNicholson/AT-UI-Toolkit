@@ -8,6 +8,8 @@ namespace DialogueEditor
 {
     public class DialogueWindow : EditorWindow
     {
+        public string fileName;
+
         [MenuItem("Window/Dialogue Editor")]
         public static void ShowWindow()
         {
@@ -36,6 +38,13 @@ namespace DialogueEditor
 
             TextField fileNameTextField = new TextField();
             fileNameTextField.value = "New Dialogue File";
+            SerializedObject serializedObject = new SerializedObject(this);
+            fileNameTextField.BindProperty(serializedObject.FindProperty("fileName"));
+
+            if (string.IsNullOrEmpty(fileName))
+            {
+                fileName = "New Dialogue File";
+            }
 
             Button saveButton = new Button();
             saveButton.text = "Save";
@@ -57,7 +66,7 @@ namespace DialogueEditor
         private void Save()
         {
             DialogueGraphview graphView = rootVisualElement.Query<DialogueGraphview>();
-            graphView.Save();
+            graphView.Save(fileName);
         }
     }
 }

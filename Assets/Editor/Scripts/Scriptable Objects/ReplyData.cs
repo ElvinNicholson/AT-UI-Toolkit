@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace DialogueEditor
 {
+    [System.Serializable]
     public class ReplyData
     {
         public string replyText;

@@ -26,19 +26,23 @@ namespace DialogueEditor
             RefreshExpandedState();
         }
 
-        public override void Save()
+        public override DialogueNodeAsset Save()
         {
-            //SingleNodeAsset asset = ScriptableObject.CreateInstance<SingleNodeAsset>();
+            // Create Asset
+            SingleNodeAsset asset = ScriptableObject.CreateInstance<SingleNodeAsset>();
+            asset.title = dialogueTitle;
+            asset.text = dialogueText;
 
+            // Get next DialogueNode
             var edges = outputPort.connections;
-
             foreach (Edge edge in edges)
             {
                 Port nextNodeInputPort = edge.input;
                 DialogueNode nextNode = nextNodeInputPort.parent.GetFirstOfType<DialogueNode>();
-                Debug.Log(nextNode.dialogueTitle);
-                nextNode.Save();
+                asset.nextNode = nextNode.Save();
             }
+
+            return asset;
         }
     }
 }

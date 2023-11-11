@@ -82,7 +82,7 @@ namespace DialogueEditor
             return newNode;
         }
 
-        public void Save()
+        public void Save(string filename)
         {
             List<DialogueNode> nodes = this.Query<DialogueNode>().ToList();
 
@@ -91,8 +91,8 @@ namespace DialogueEditor
                 if (!node.IsInputPortEmpty())
                 {
                     // Is first node
-                    Debug.Log("First Node: " + node.dialogueTitle);
-                    node.Save();
+                    DialogueNodeAsset assetInstance = node.Save();
+                    AssetDatabase.CreateAsset(assetInstance, $"Assets/Dialogue Assets/{filename}.asset");
                 }
             }
         }
