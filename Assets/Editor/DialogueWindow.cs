@@ -39,6 +39,7 @@ namespace DialogueEditor
 
             Button saveButton = new Button();
             saveButton.text = "Save";
+            saveButton.clicked += Save;
 
             Button loadButton = new Button();
             loadButton.text = "Load";
@@ -51,6 +52,12 @@ namespace DialogueEditor
             toolbar.styleSheets.Add((StyleSheet)EditorGUIUtility.Load("DialogueToolbar.uss"));
 
             rootVisualElement.Add(toolbar);
+        }
+
+        private void Save()
+        {
+            DialogueGraphview graphView = rootVisualElement.Query<DialogueGraphview>();
+            graphView.Save();
         }
     }
 }

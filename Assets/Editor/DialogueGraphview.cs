@@ -82,13 +82,19 @@ namespace DialogueEditor
             return newNode;
         }
 
-        private Group CreateGroup(string groupName, Vector2 position)
+        public void Save()
         {
-            Group group = new Group();
-            group.title = groupName;
-            group.SetPosition(new Rect(position, Vector2.zero));
+            List<DialogueNode> nodes = this.Query<DialogueNode>().ToList();
 
-            return group;
+            foreach (DialogueNode node in nodes)
+            {
+                if (!node.IsInputPortEmpty())
+                {
+                    // Is first node
+                    Debug.Log("First Node: " + node.dialogueTitle);
+                    node.Save();
+                }
+            }
         }
 
         public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)

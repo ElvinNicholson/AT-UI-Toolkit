@@ -19,6 +19,8 @@ namespace DialogueEditor
 
         protected GraphView graphView;
 
+        protected Port inputPort;
+
         public virtual void Init(GraphView graphViewRef, Vector2 position)
         {
             dialogueTitle = "Dialogue Title";
@@ -46,10 +48,11 @@ namespace DialogueEditor
             titleTextField.AddToClassList("de-node__text-field");
             titleTextField.AddToClassList("de-node__title-text-field");
             titleTextField.AddToClassList("de-node__text-field__hidden");
+            titleTextField.RegisterValueChangedCallback(evt => OnTitleTextFieldValueChanged(evt.newValue));
             titleContainer.Insert(0, titleTextField);
 
             // Input Port
-            Port inputPort = InstantiatePort(Orientation.Horizontal, Direction.Input, Port.Capacity.Multi, typeof(bool));
+            inputPort = InstantiatePort(Orientation.Horizontal, Direction.Input, Port.Capacity.Multi, typeof(bool));
             inputPort.portName = "Previous Dialogue";
             inputContainer.Add(inputPort);
 
@@ -60,6 +63,16 @@ namespace DialogueEditor
             dialogueTextField.AddToClassList("de-node__dialogue-text-field");
             dialogueTextField.AddToClassList("de-node__text-field__hidden");
             extensionContainer.Add(dialogueTextField);
+        }
+
+        public virtual void Save()
+        {
+
+        }
+
+        public bool IsInputPortEmpty()
+        {
+            return inputPort.connected;
         }
 
         public virtual void DisconnectAllPort()
@@ -79,6 +92,11 @@ namespace DialogueEditor
 
                 graphView.DeleteElements(port.connections);
             }
+        }
+
+        private void OnTitleTextFieldValueChanged(string newValue)
+        {
+            dialogueTitle = newValue;
         }
     }
 }
