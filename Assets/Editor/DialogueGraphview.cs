@@ -117,16 +117,68 @@ namespace DialogueEditor
 
         public void Save(string filename)
         {
+            MainDialogueAsset mainAssetInstance = ScriptableObject.CreateInstance<MainDialogueAsset>();
             List<DialogueNode> nodes = this.Query<DialogueNode>().ToList();
+            string firstNodeID = "";
 
+            // Save DialogueNodeAssets to dialogueNodeAssets List
             foreach (DialogueNode node in nodes)
             {
-                if (node.dialogueType == DialogueNodeType.START)
+                switch(node.dialogueType)
                 {
-                    DialogueNodeAsset assetInstance = node.Save();
-                    AssetDatabase.CreateAsset(assetInstance, $"Assets/Dialogue Assets/{filename}.asset");
+                    case DialogueNodeType.SINGLE:
+                    case DialogueNodeType.MULTIPLE:
+                        mainAssetInstance.dialogueNodeAssets.Add(node.Save());
+                        break;
+
+                    case DialogueNodeType.START:
+                        DialogueNodeStart startNode = node as DialogueNodeStart;
+                        firstNodeID = startNode.GetFirstNodeID();
+                        break;
                 }
             }
+
+            // Set reference to nextNode
+            foreach (DialogueNodeAsset nodeAsset in mainAssetInstance.dialogueNodeAssets)
+            {
+                if (firstNodeID == nodeAsset.nodeID)
+                {
+                    mainAssetInstance.firstNode = nodeAsset;
+                }
+
+                switch (nodeAsset.type)
+                {
+                    case DialogueNodeType.SINGLE:
+                        SingleNodeAsset singleNodeAsset = nodeAsset as SingleNodeAsset;
+                        foreach (DialogueNodeAsset nextNodeAsset in mainAssetInstance.dialogueNodeAssets)
+                        {
+                            if (singleNodeAsset.nextNodeID == nextNodeAsset.nodeID)
+                            {
+                                singleNodeAsset.nextNode = nextNodeAsset;
+                                break;
+                            }
+                        }
+                        break;
+
+                    case DialogueNodeType.MULTIPLE:
+                        ReplyNodeAsset replyNodeAsset = nodeAsset as ReplyNodeAsset;
+                        foreach (ReplyData replyData in replyNodeAsset.replies)
+                        {
+                            foreach (DialogueNodeAsset nextNodeAsset in mainAssetInstance.dialogueNodeAssets)
+                            {
+                                if (replyData.nextNodeID == nextNodeAsset.nodeID)
+                                {
+                                    replyData.nextNode = nextNodeAsset;
+                                    break;
+                                }
+                            }
+                        }
+                        break;
+                }
+            }
+
+            // Save asset
+            AssetDatabase.CreateAsset(mainAssetInstance, $"Assets/Dialogue Assets/{filename}.asset");
         }
 
         public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)

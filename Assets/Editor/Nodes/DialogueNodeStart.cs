@@ -53,5 +53,21 @@ namespace DialogueEditor
 
             return asset;
         }
+
+        public string GetFirstNodeID()
+        {
+            // Get next DialogueNode
+            var edges = outputPort.connections;
+            string firstNodeID = "";
+
+            foreach (Edge edge in edges)
+            {
+                Port nextNodeInputPort = edge.input;
+                DialogueNode nextNode = nextNodeInputPort.parent.GetFirstOfType<DialogueNode>();
+                firstNodeID = nextNode.nodeID;
+            }
+
+            return firstNodeID;
+        }
     }
 }

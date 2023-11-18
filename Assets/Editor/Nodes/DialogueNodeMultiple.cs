@@ -100,6 +100,8 @@ namespace DialogueEditor
             ReplyNodeAsset asset = ScriptableObject.CreateInstance<ReplyNodeAsset>();
             asset.title = dialogueTitle;
             asset.text = dialogueText;
+            asset.type = dialogueType;
+            asset.nodeID = nodeID;
 
             // Loop through each output port in replies
             for (int i = 0; i < outputPortList.Count; i++)
@@ -114,7 +116,8 @@ namespace DialogueEditor
                     DialogueNode nextNode = nextNodeInputPort.parent.GetFirstOfType<DialogueNode>();
                     if (nextNode.dialogueType != DialogueNodeType.END)
                     {
-                        replyData.nextNode = nextNode.Save();
+                        replyData.nextNodeID = nextNode.nodeID;
+                        //replyData.nextNode = nextNode.Save();
                     }
                 }
 

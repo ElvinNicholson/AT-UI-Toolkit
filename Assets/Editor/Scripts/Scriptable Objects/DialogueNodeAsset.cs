@@ -8,6 +8,8 @@ namespace DialogueEditor
     {
         public string title;
         public string text;
+        public DialogueNodeType type;
+        [HideInInspector] public string nodeID;
     }
 }
 

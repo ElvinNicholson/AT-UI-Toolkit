@@ -9,5 +9,6 @@ namespace DialogueEditor
     {
         public string replyText;
         public DialogueNodeAsset nextNode;
+        [HideInInspector] public string nextNodeID;
     }
 }
