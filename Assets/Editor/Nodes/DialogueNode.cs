@@ -23,7 +23,7 @@ namespace DialogueEditor
 
         protected GraphView graphView;
 
-        protected Port inputPort;
+        public Port inputPort;
 
         public virtual void Init(GraphView graphViewRef, Vector2 position)
         {

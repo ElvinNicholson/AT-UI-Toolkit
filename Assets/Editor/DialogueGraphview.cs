@@ -185,10 +185,77 @@ namespace DialogueEditor
 
         public void Load(MainDialogueAsset mainDialogueAsset)
         {
+            // Clear current graphView
+            ClearNodesAndEdges();
+
             foreach (DialogueNodeAsset asset in mainDialogueAsset.dialogueNodeAssets)
             {
                 AddNodeFromAsset(asset);
             }
+
+            // Create port connections
+            List<DialogueNode> nodes = this.Query<DialogueNode>().ToList();
+            foreach (DialogueNode node in nodes)
+            {
+                switch (node.dialogueType)
+                {
+                    case DialogueNodeType.SINGLE:
+                        DialogueNodeSingle singleNode = node as DialogueNodeSingle;
+
+                        foreach (DialogueNode nextNode in nodes)
+                        {
+                            if (singleNode.nextNodeID == nextNode.nodeID)
+                            {
+                                ConnectPorts(singleNode.outputPort, nextNode.inputPort);
+                                break;
+                            }
+                        }
+                        break;
+
+                    case DialogueNodeType.REPLY:
+                        DialogueNodeMultiple replyNode = node as DialogueNodeMultiple;
+
+                        for (int i = 0; i < replyNode.nextNodeIDs.Count; i++)
+                        {
+                            foreach (DialogueNode nextNode in nodes)
+                            {
+                                if (replyNode.nextNodeIDs[i] == nextNode.nodeID)
+                                {
+                                    ConnectPorts(replyNode.outputPortList[i], nextNode.inputPort);
+                                    break;
+                                }
+                            }
+                        }
+                        break;
+
+                    case DialogueNodeType.START:
+                        DialogueNodeStart startNode = node as DialogueNodeStart;
+
+                        foreach (DialogueNode nextNode in nodes)
+                        {
+                            if (startNode.nextNodeID == nextNode.nodeID)
+                            {
+                                ConnectPorts(startNode.outputPort, nextNode.inputPort);
+                                break;
+                            }
+                        }
+                        break;
+                }
+            }
+        }
+
+        private void ConnectPorts(Port fromPort, Port toPort)
+        {
+            fromPort.ConnectTo(toPort);
+
+            Edge edge = new Edge();
+            edge.output = fromPort;
+            edge.input = toPort;
+
+            fromPort.Connect(edge);
+            toPort.Connect(edge);
+
+            AddElement(edge);
         }
 
         private void AddNodeFromAsset(DialogueNodeAsset asset)
@@ -260,6 +327,18 @@ namespace DialogueEditor
                     RemoveElement(node);
                 }
             };
+        }
+
+        private void ClearNodesAndEdges()
+        {
+            List<GraphElement> elementList = graphElements.ToList();
+            foreach (GraphElement element in elementList)
+            {
+                if (element is Node || element is Edge)
+                {
+                    RemoveElement(element);
+                }
+            }
         }
 
         private bool StartNodeExist()

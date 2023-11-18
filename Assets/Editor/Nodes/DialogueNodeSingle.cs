@@ -5,7 +5,8 @@ namespace DialogueEditor
 {
     public class DialogueNodeSingle : DialogueNode
     {
-        private Port outputPort;
+        public Port outputPort;
+        public string nextNodeID;
 
         public override void Init(GraphView graphViewRef, Vector2 position)
         {
@@ -21,6 +22,7 @@ namespace DialogueEditor
             dialogueType = DialogueNodeType.SINGLE;
             graphView = graphViewRef;
             nodeID = singleNodeAsset.nodeID;
+            nextNodeID = singleNodeAsset.nextNodeID;
             SetPosition(singleNodeAsset.position);
 
             InitStyles();
@@ -55,10 +57,7 @@ namespace DialogueEditor
             {
                 Port nextNodeInputPort = edge.input;
                 DialogueNode nextNode = nextNodeInputPort.parent.GetFirstOfType<DialogueNode>();
-                if (nextNode.dialogueType != DialogueNodeType.END)
-                {
-                    asset.nextNodeID = nextNode.nodeID;
-                }
+                asset.nextNodeID = nextNode.nodeID;
             }
 
             return asset;

@@ -6,7 +6,8 @@ namespace DialogueEditor
 {
     public class DialogueNodeStart : DialogueNode
     {
-        private Port outputPort;
+        public Port outputPort;
+        public string nextNodeID;
 
         public override void Init(GraphView graphViewRef, Vector2 position)
         {
@@ -17,11 +18,13 @@ namespace DialogueEditor
 
         public override void InitFromAsset(DialogueNodeAsset asset, GraphView graphViewRef)
         {
+            SingleNodeAsset singleNodeAsset = asset as SingleNodeAsset;
             dialogueTitle = "Start Dialogue";
             dialogueType = DialogueNodeType.START;
             graphView = graphViewRef;
-            nodeID = asset.nodeID;
-            SetPosition(asset.position);
+            nodeID = singleNodeAsset.nodeID;
+            nextNodeID = singleNodeAsset.nextNodeID;
+            SetPosition(singleNodeAsset.position);
 
             InitStyles();
             Draw();
@@ -64,10 +67,11 @@ namespace DialogueEditor
 
         public override DialogueNodeAsset Save()
         {
-            DialogueNodeAsset asset = ScriptableObject.CreateInstance<DialogueNodeAsset>();
+            SingleNodeAsset asset = ScriptableObject.CreateInstance<SingleNodeAsset>();
             asset.title = dialogueTitle;
             asset.type = dialogueType;
             asset.nodeID = nodeID;
+            asset.nextNodeID = GetFirstNodeID();
             asset.position = GetPosition();
 
             return asset;

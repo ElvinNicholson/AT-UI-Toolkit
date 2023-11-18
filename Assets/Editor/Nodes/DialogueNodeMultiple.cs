@@ -8,7 +8,8 @@ namespace DialogueEditor
     public class DialogueNodeMultiple : DialogueNode
     {
         public List<string> replyList;
-        private List<Port> outputPortList;
+        public List<Port> outputPortList;
+        public List<string> nextNodeIDs;
 
         public override void Init(GraphView graphViewRef, Vector2 position)
         {
@@ -33,12 +34,14 @@ namespace DialogueEditor
 
             outputPortList = new List<Port>();
             replyList = new List<string>();
+            nextNodeIDs = new List<string>();
 
             DrawFromAsset();
 
             foreach (ReplyData reply in replyNodeAsset.replies)
             {
                 replyList.Add(reply.replyText);
+                nextNodeIDs.Add(reply.nextNodeID);
                 AddChoiceElement(replyList[replyList.Count - 1]);
             }
         }
@@ -154,10 +157,7 @@ namespace DialogueEditor
                 {
                     Port nextNodeInputPort = edge.input;
                     DialogueNode nextNode = nextNodeInputPort.parent.GetFirstOfType<DialogueNode>();
-                    if (nextNode.dialogueType != DialogueNodeType.END)
-                    {
-                        replyData.nextNodeID = nextNode.nodeID;
-                    }
+                    replyData.nextNodeID = nextNode.nodeID;
                 }
 
                 asset.replies.Add(replyData);
