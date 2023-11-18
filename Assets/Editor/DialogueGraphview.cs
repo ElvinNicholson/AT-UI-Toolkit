@@ -117,16 +117,19 @@ namespace DialogueEditor
 
         public void Save(string filename)
         {
+            MainDialogueAsset mainInstance = ScriptableObject.CreateInstance<MainDialogueAsset>();
+
             List<DialogueNode> nodes = this.Query<DialogueNode>().ToList();
 
             foreach (DialogueNode node in nodes)
             {
-                if (node.dialogueType == DialogueNodeType.START)
+                if (node.dialogueType != DialogueNodeType.START && node.dialogueType != DialogueNodeType.END)
                 {
-                    DialogueNodeAsset assetInstance = node.Save();
-                    AssetDatabase.CreateAsset(assetInstance, $"Assets/Dialogue Assets/{filename}.asset");
+                    mainInstance.dialogueNodes.Add(node.Save());
                 }
             }
+
+            AssetDatabase.CreateAsset(mainInstance, $"Assets/Dialogue Assets/{filename}.asset");
         }
 
         public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)

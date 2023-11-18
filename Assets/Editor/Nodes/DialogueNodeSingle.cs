@@ -31,6 +31,7 @@ namespace DialogueEditor
             SingleNodeAsset asset = ScriptableObject.CreateInstance<SingleNodeAsset>();
             asset.title = dialogueTitle;
             asset.text = dialogueText;
+            asset.nodeID = nodeID;
 
             // Get next DialogueNode
             var edges = outputPort.connections;
@@ -40,7 +41,7 @@ namespace DialogueEditor
                 DialogueNode nextNode = nextNodeInputPort.parent.GetFirstOfType<DialogueNode>();
                 if (nextNode.dialogueType != DialogueNodeType.END)
                 {
-                    asset.nextNode = nextNode.Save();
+                    asset.nextNodeID = nextNode.nodeID;
                 }
             }
 

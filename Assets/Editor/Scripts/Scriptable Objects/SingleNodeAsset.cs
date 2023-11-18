@@ -6,6 +6,7 @@ namespace DialogueEditor
 {
     public class SingleNodeAsset : DialogueNodeAsset
     {
-        public DialogueNodeAsset nextNode;
+        public string nextNodeID;
+        //public DialogueNodeAsset nextNode;
     }
 }

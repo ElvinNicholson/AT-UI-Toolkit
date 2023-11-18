@@ -8,6 +8,7 @@ namespace DialogueEditor
     public class ReplyData
     {
         public string replyText;
-        public DialogueNodeAsset nextNode;
+        public string nextNodeID;
+        //public DialogueNodeAsset nextNode;
     }
 }

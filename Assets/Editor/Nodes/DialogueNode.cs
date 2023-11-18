@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine.UIElements;
+using System;
 
 namespace DialogueEditor
 {
@@ -17,6 +18,7 @@ namespace DialogueEditor
         public string dialogueTitle;
         public string dialogueText;
         public DialogueNodeType dialogueType;
+        public string nodeID;
 
         protected GraphView graphView;
 
@@ -27,6 +29,7 @@ namespace DialogueEditor
             dialogueTitle = "Dialogue Title";
             dialogueText = "Dialogue Text";
             graphView = graphViewRef;
+            nodeID = Guid.NewGuid().ToString();
 
             SetPosition(new Rect(position, Vector2.zero));
 
