@@ -12,11 +12,35 @@ namespace DialogueEditor
 
         public override void Init(GraphView graphViewRef, Vector2 position)
         {
-            dialogueType = DialogueNodeType.MULTIPLE;
+            dialogueType = DialogueNodeType.REPLY;
             base.Init(graphViewRef, position);
 
             outputPortList = new List<Port>();
             replyList = new List<string>();
+        }
+
+        public override void InitFromAsset(DialogueNodeAsset asset, GraphView graphViewRef)
+        {
+            ReplyNodeAsset replyNodeAsset = asset as ReplyNodeAsset;
+            dialogueTitle = replyNodeAsset.title;
+            dialogueText = replyNodeAsset.text;
+            dialogueType = DialogueNodeType.REPLY;
+            graphView = graphViewRef;
+            nodeID = replyNodeAsset.nodeID;
+            SetPosition(replyNodeAsset.position);
+
+            InitStyles();
+
+            outputPortList = new List<Port>();
+            replyList = new List<string>();
+
+            DrawFromAsset();
+
+            foreach (ReplyData reply in replyNodeAsset.replies)
+            {
+                replyList.Add(reply.replyText);
+                AddChoiceElement(replyList[replyList.Count - 1]);
+            }
         }
 
         public override void Draw()
@@ -33,6 +57,21 @@ namespace DialogueEditor
 
             // Replies
             AddNewReply();
+
+            RefreshExpandedState();
+        }
+
+        private void DrawFromAsset()
+        {
+            base.Draw();
+
+            // Add Choice Button
+            Button addChoiceButton = new Button();
+            addChoiceButton.text = "Add Dialogue Reply";
+            addChoiceButton.clicked += AddNewReply;
+            addChoiceButton.AddToClassList("de-node__button");
+
+            extensionContainer.Add(addChoiceButton);
 
             RefreshExpandedState();
         }
@@ -102,6 +141,7 @@ namespace DialogueEditor
             asset.text = dialogueText;
             asset.type = dialogueType;
             asset.nodeID = nodeID;
+            asset.position = GetPosition();
 
             // Loop through each output port in replies
             for (int i = 0; i < outputPortList.Count; i++)
@@ -117,7 +157,6 @@ namespace DialogueEditor
                     if (nextNode.dialogueType != DialogueNodeType.END)
                     {
                         replyData.nextNodeID = nextNode.nodeID;
-                        //replyData.nextNode = nextNode.Save();
                     }
                 }
 

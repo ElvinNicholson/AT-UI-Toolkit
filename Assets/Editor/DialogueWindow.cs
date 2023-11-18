@@ -1,3 +1,4 @@
+using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEditor.UIElements;
 using UnityEditor;
@@ -52,6 +53,7 @@ namespace DialogueEditor
 
             Button loadButton = new Button();
             loadButton.text = "Load";
+            loadButton.clicked += Load;
 
             toolbar.Add(fileNameLabel);
             toolbar.Add(fileNameTextField);
@@ -67,6 +69,25 @@ namespace DialogueEditor
         {
             DialogueGraphview graphView = rootVisualElement.Query<DialogueGraphview>();
             graphView.Save(fileName);
+        }
+
+        private void Load()
+        {
+            string absolutePath = EditorUtility.OpenFilePanel("Load dialogue .asset file", "Assets", "asset");
+            if (string.IsNullOrEmpty(absolutePath))
+            {
+                return;
+            }
+
+            string relativePath = "Assets" + absolutePath.Substring(Application.dataPath.Length);
+            MainDialogueAsset mainDialogueAsset = GetAssetFromDatabase<MainDialogueAsset>(relativePath);
+            DialogueGraphview graphView = rootVisualElement.Query<DialogueGraphview>();
+            graphView.Load(mainDialogueAsset);
+        }
+
+        private T GetAssetFromDatabase<T>(string path) where T : ScriptableObject
+        {
+            return AssetDatabase.LoadAssetAtPath<T>(path);
         }
     }
 }

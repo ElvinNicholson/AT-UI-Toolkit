@@ -8,13 +8,21 @@ namespace DialogueEditor
     {
         public override void Init(GraphView graphViewRef, Vector2 position)
         {
-            dialogueType = DialogueNodeType.END;
+            base.Init(graphViewRef, position);
             dialogueTitle = "End Dialogue";
-            graphView = graphViewRef;
-            SetPosition(new Rect(position, Vector2.zero));
+            dialogueType = DialogueNodeType.END;
+        }
 
-            titleContainer.style.backgroundColor = new StyleColor(new Color(0.2f, 0.2f, 0.2f));
-            inputContainer.style.backgroundColor = new StyleColor(new Color(0.2f, 0.2f, 0.2f));
+        public override void InitFromAsset(DialogueNodeAsset asset, GraphView graphViewRef)
+        {
+            dialogueTitle = "End Dialogue";
+            dialogueType = DialogueNodeType.END;
+            graphView = graphViewRef;
+            nodeID = asset.nodeID;
+            SetPosition(asset.position);
+
+            InitStyles();
+            Draw();
         }
 
         public override void Draw()
@@ -34,6 +42,17 @@ namespace DialogueEditor
             outputContainer.Add(inputPort);
 
             RefreshExpandedState();
+        }
+
+        public override DialogueNodeAsset Save()
+        {
+            DialogueNodeAsset asset = ScriptableObject.CreateInstance<DialogueNodeAsset>();
+            asset.title = dialogueTitle;
+            asset.type = dialogueType;
+            asset.nodeID = nodeID;
+            asset.position = GetPosition();
+
+            return asset;
         }
     }
 }

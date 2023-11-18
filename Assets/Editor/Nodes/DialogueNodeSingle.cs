@@ -13,6 +13,20 @@ namespace DialogueEditor
             base.Init(graphViewRef, position);
         }
 
+        public override void InitFromAsset(DialogueNodeAsset asset, GraphView graphViewRef)
+        {
+            SingleNodeAsset singleNodeAsset = asset as SingleNodeAsset;
+            dialogueTitle = singleNodeAsset.title;
+            dialogueText = singleNodeAsset.text;
+            dialogueType = DialogueNodeType.SINGLE;
+            graphView = graphViewRef;
+            nodeID = singleNodeAsset.nodeID;
+            SetPosition(singleNodeAsset.position);
+
+            InitStyles();
+            Draw();
+        }
+
         public override void Draw()
         {
             base.Draw();
@@ -33,6 +47,7 @@ namespace DialogueEditor
             asset.text = dialogueText;
             asset.type = dialogueType;
             asset.nodeID = nodeID;
+            asset.position = GetPosition();
 
             // Get next DialogueNode
             var edges = outputPort.connections;
@@ -43,7 +58,6 @@ namespace DialogueEditor
                 if (nextNode.dialogueType != DialogueNodeType.END)
                 {
                     asset.nextNodeID = nextNode.nodeID;
-                    //asset.nextNode = nextNode.Save();
                 }
             }
 

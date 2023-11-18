@@ -10,13 +10,21 @@ namespace DialogueEditor
 
         public override void Init(GraphView graphViewRef, Vector2 position)
         {
-            dialogueType = DialogueNodeType.START;
+            base.Init(graphViewRef, position);
             dialogueTitle = "Start Dialogue";
-            graphView = graphViewRef;
-            SetPosition(new Rect(position, Vector2.zero));
+            dialogueType = DialogueNodeType.START;
+        }
 
-            titleContainer.style.backgroundColor = new StyleColor(new Color(0.2f, 0.2f, 0.2f));
-            outputContainer.style.backgroundColor = new StyleColor(new Color(0.15f, 0.15f, 0.15f));
+        public override void InitFromAsset(DialogueNodeAsset asset, GraphView graphViewRef)
+        {
+            dialogueTitle = "Start Dialogue";
+            dialogueType = DialogueNodeType.START;
+            graphView = graphViewRef;
+            nodeID = asset.nodeID;
+            SetPosition(asset.position);
+
+            InitStyles();
+            Draw();
         }
 
         public override void Draw()
@@ -38,22 +46,6 @@ namespace DialogueEditor
             RefreshExpandedState();
         }
 
-        public override DialogueNodeAsset Save()
-        {
-            // Get next DialogueNode
-            var edges = outputPort.connections;
-            DialogueNodeAsset asset = null;
-
-            foreach (Edge edge in edges)
-            {
-                Port nextNodeInputPort = edge.input;
-                DialogueNode nextNode = nextNodeInputPort.parent.GetFirstOfType<DialogueNode>();
-                asset = nextNode.Save();
-            }
-
-            return asset;
-        }
-
         public string GetFirstNodeID()
         {
             // Get next DialogueNode
@@ -68,6 +60,17 @@ namespace DialogueEditor
             }
 
             return firstNodeID;
+        }
+
+        public override DialogueNodeAsset Save()
+        {
+            DialogueNodeAsset asset = ScriptableObject.CreateInstance<DialogueNodeAsset>();
+            asset.title = dialogueTitle;
+            asset.type = dialogueType;
+            asset.nodeID = nodeID;
+            asset.position = GetPosition();
+
+            return asset;
         }
     }
 }

@@ -52,7 +52,7 @@ namespace DialogueEditor
 
             ContextualMenuManipulator multipleContextMenu = new ContextualMenuManipulator(
                 menuEvent => menuEvent.menu.AppendAction("Add Dialogue Reply Node", 
-                actionEvent => AddElement(AddNode(DialogueNodeType.MULTIPLE, 
+                actionEvent => AddElement(AddNode(DialogueNodeType.REPLY, 
                 viewTransform.matrix.inverse.MultiplyPoint(actionEvent.eventInfo.localMousePosition)))));
             this.AddManipulator(multipleContextMenu);
 
@@ -85,7 +85,7 @@ namespace DialogueEditor
                     newNode = new DialogueNodeSingle();
                     break;
 
-                case DialogueNodeType.MULTIPLE:
+                case DialogueNodeType.REPLY:
                     newNode = new DialogueNodeMultiple();
                     break;
 
@@ -127,13 +127,15 @@ namespace DialogueEditor
                 switch(node.dialogueType)
                 {
                     case DialogueNodeType.SINGLE:
-                    case DialogueNodeType.MULTIPLE:
+                    case DialogueNodeType.REPLY:
+                    case DialogueNodeType.END:
                         mainAssetInstance.dialogueNodeAssets.Add(node.Save());
                         break;
 
                     case DialogueNodeType.START:
                         DialogueNodeStart startNode = node as DialogueNodeStart;
                         firstNodeID = startNode.GetFirstNodeID();
+                        mainAssetInstance.dialogueNodeAssets.Add(node.Save());
                         break;
                 }
             }
@@ -160,7 +162,7 @@ namespace DialogueEditor
                         }
                         break;
 
-                    case DialogueNodeType.MULTIPLE:
+                    case DialogueNodeType.REPLY:
                         ReplyNodeAsset replyNodeAsset = nodeAsset as ReplyNodeAsset;
                         foreach (ReplyData replyData in replyNodeAsset.replies)
                         {
@@ -179,6 +181,45 @@ namespace DialogueEditor
 
             // Save asset
             AssetDatabase.CreateAsset(mainAssetInstance, $"Assets/Dialogue Assets/{filename}.asset");
+        }
+
+        public void Load(MainDialogueAsset mainDialogueAsset)
+        {
+            foreach (DialogueNodeAsset asset in mainDialogueAsset.dialogueNodeAssets)
+            {
+                AddNodeFromAsset(asset);
+            }
+        }
+
+        private void AddNodeFromAsset(DialogueNodeAsset asset)
+        {
+            DialogueNode newNode;
+
+            switch (asset.type)
+            {
+                case DialogueNodeType.SINGLE:
+                    newNode = new DialogueNodeSingle();
+                    break;
+
+                case DialogueNodeType.REPLY:
+                    newNode = new DialogueNodeMultiple();
+                    break;
+
+                case DialogueNodeType.START:
+                    newNode = new DialogueNodeStart();
+                    break;
+
+                case DialogueNodeType.END:
+                    newNode = new DialogueNodeEnd();
+                    break;
+
+                default:
+                    return;
+            }
+
+            newNode.InitFromAsset(asset, this);
+
+            AddElement(newNode);
         }
 
         public override List<Port> GetCompatiblePorts(Port startPort, NodeAdapter nodeAdapter)

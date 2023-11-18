@@ -9,7 +9,7 @@ namespace DialogueEditor
     public enum DialogueNodeType
     {
         SINGLE,
-        MULTIPLE,
+        REPLY,
         START,
         END
     }
@@ -30,11 +30,18 @@ namespace DialogueEditor
             dialogueTitle = "Dialogue Title";
             dialogueText = "Dialogue Text";
             graphView = graphViewRef;
-
             nodeID = Guid.NewGuid().ToString();
-
             SetPosition(new Rect(position, Vector2.zero));
 
+            InitStyles();
+        }
+
+        public virtual void InitFromAsset(DialogueNodeAsset asset, GraphView graphViewRef)
+        {
+        }
+
+        protected void InitStyles()
+        {
             extensionContainer.style.backgroundColor = new StyleColor(new Color(0.1f, 0.1f, 0.1f));
             extensionContainer.style.paddingTop = 8;
             extensionContainer.style.paddingLeft = 8;
