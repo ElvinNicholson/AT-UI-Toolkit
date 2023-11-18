@@ -12,6 +12,7 @@ namespace DialogueEditor
 
         public override void Init(GraphView graphViewRef, Vector2 position)
         {
+            dialogueType = DialogueNodeType.MULTIPLE;
             base.Init(graphViewRef, position);
 
             outputPortList = new List<Port>();
@@ -111,7 +112,10 @@ namespace DialogueEditor
                 {
                     Port nextNodeInputPort = edge.input;
                     DialogueNode nextNode = nextNodeInputPort.parent.GetFirstOfType<DialogueNode>();
-                    replyData.nextNode = nextNode.Save();
+                    if (nextNode.dialogueType != DialogueNodeType.END)
+                    {
+                        replyData.nextNode = nextNode.Save();
+                    }
                 }
 
                 asset.replies.Add(replyData);

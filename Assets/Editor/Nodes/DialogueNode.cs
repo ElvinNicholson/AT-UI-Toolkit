@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine.UIElements;
@@ -8,13 +7,16 @@ namespace DialogueEditor
     public enum DialogueNodeType
     {
         SINGLE,
-        MULTIPLE
+        MULTIPLE,
+        START,
+        END
     }
 
     public class DialogueNode : Node
     {
         public string dialogueTitle;
-        public string dialogueText { get; set; }
+        public string dialogueText;
+        public DialogueNodeType dialogueType;
 
         protected GraphView graphView;
 

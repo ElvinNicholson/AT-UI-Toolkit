@@ -1,7 +1,5 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor.Experimental.GraphView;
-using UnityEngine.UIElements;
 
 namespace DialogueEditor
 {
@@ -11,6 +9,7 @@ namespace DialogueEditor
 
         public override void Init(GraphView graphViewRef, Vector2 position)
         {
+            dialogueType = DialogueNodeType.SINGLE;
             base.Init(graphViewRef, position);
         }
 
@@ -39,7 +38,10 @@ namespace DialogueEditor
             {
                 Port nextNodeInputPort = edge.input;
                 DialogueNode nextNode = nextNodeInputPort.parent.GetFirstOfType<DialogueNode>();
-                asset.nextNode = nextNode.Save();
+                if (nextNode.dialogueType != DialogueNodeType.END)
+                {
+                    asset.nextNode = nextNode.Save();
+                }
             }
 
             return asset;

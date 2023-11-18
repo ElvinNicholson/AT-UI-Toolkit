@@ -45,7 +45,7 @@ namespace DialogueEditor
 
             // Right click window
             ContextualMenuManipulator singleContextMenu = new ContextualMenuManipulator(
-                menuEvent => menuEvent.menu.AppendAction("Add Dialogue Node", 
+                menuEvent => menuEvent.menu.AppendAction("Add Dialogue Single Node", 
                 actionEvent => AddElement(AddNode(DialogueNodeType.SINGLE, 
                 viewTransform.matrix.inverse.MultiplyPoint(actionEvent.eventInfo.localMousePosition)))));
             this.AddManipulator(singleContextMenu);
@@ -55,6 +55,18 @@ namespace DialogueEditor
                 actionEvent => AddElement(AddNode(DialogueNodeType.MULTIPLE, 
                 viewTransform.matrix.inverse.MultiplyPoint(actionEvent.eventInfo.localMousePosition)))));
             this.AddManipulator(multipleContextMenu);
+
+            ContextualMenuManipulator startContextMenu = new ContextualMenuManipulator(
+                menuEvent => menuEvent.menu.AppendAction("Add Dialogue Start Node",
+                actionEvent => AddElement(AddNode(DialogueNodeType.START,
+                viewTransform.matrix.inverse.MultiplyPoint(actionEvent.eventInfo.localMousePosition)))));
+            this.AddManipulator(startContextMenu);
+
+            ContextualMenuManipulator endContextMenu = new ContextualMenuManipulator(
+                menuEvent => menuEvent.menu.AppendAction("Add Dialogue End Node",
+                actionEvent => AddElement(AddNode(DialogueNodeType.END,
+                viewTransform.matrix.inverse.MultiplyPoint(actionEvent.eventInfo.localMousePosition)))));
+            this.AddManipulator(endContextMenu);
 
             // Dragging nodes
             this.AddManipulator(new SelectionDragger());
@@ -67,13 +79,34 @@ namespace DialogueEditor
         {
             DialogueNode newNode;
 
-            if (type == DialogueNodeType.SINGLE)
+            switch(type)
             {
-                newNode = new DialogueNodeSingle();
-            }
-            else
-            {
-                newNode = new DialogueNodeMultiple();
+                case DialogueNodeType.SINGLE:
+                    newNode = new DialogueNodeSingle();
+                    break;
+
+                case DialogueNodeType.MULTIPLE:
+                    newNode = new DialogueNodeMultiple();
+                    break;
+
+                case DialogueNodeType.START:
+                    if (!StartNodeExist())
+                    {
+                        newNode = new DialogueNodeStart();
+                    }
+                    else
+                    {
+                        Debug.LogError("Start Node already exists");
+                        return null;
+                    }
+                    break;
+
+                case DialogueNodeType.END:
+                    newNode = new DialogueNodeEnd();
+                    break;
+
+                default:
+                    return null;
             }
 
             newNode.Init(this, position);
@@ -88,9 +121,8 @@ namespace DialogueEditor
 
             foreach (DialogueNode node in nodes)
             {
-                if (!node.IsInputPortEmpty())
+                if (node.dialogueType == DialogueNodeType.START)
                 {
-                    // Is first node
                     DialogueNodeAsset assetInstance = node.Save();
                     AssetDatabase.CreateAsset(assetInstance, $"Assets/Dialogue Assets/{filename}.asset");
                 }
@@ -135,6 +167,19 @@ namespace DialogueEditor
                     RemoveElement(node);
                 }
             };
+        }
+
+        private bool StartNodeExist()
+        {
+            List<DialogueNode> nodes = this.Query<DialogueNode>().ToList();
+            foreach (DialogueNode node in nodes)
+            {
+                if (node.dialogueType == DialogueNodeType.START)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
