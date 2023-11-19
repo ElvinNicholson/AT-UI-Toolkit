@@ -118,6 +118,8 @@ namespace DialogueEditor
         public void Save(string filename)
         {
             MainDialogueAsset mainAssetInstance = ScriptableObject.CreateInstance<MainDialogueAsset>();
+            AssetDatabase.CreateAsset(mainAssetInstance, $"Assets/Dialogue Assets/{filename}.asset");
+
             List<DialogueNode> nodes = this.Query<DialogueNode>().ToList();
             string firstNodeID = "";
 
@@ -143,6 +145,9 @@ namespace DialogueEditor
             // Set reference to nextNode
             foreach (DialogueNodeAsset nodeAsset in mainAssetInstance.dialogueNodeAssets)
             {
+                // Write nodeAsset to mainAssetInstance
+                AssetDatabase.AddObjectToAsset(nodeAsset, mainAssetInstance);
+
                 if (firstNodeID == nodeAsset.nodeID)
                 {
                     mainAssetInstance.firstNode = nodeAsset;
@@ -180,7 +185,7 @@ namespace DialogueEditor
             }
 
             // Save asset
-            AssetDatabase.CreateAsset(mainAssetInstance, $"Assets/Dialogue Assets/{filename}.asset");
+            AssetDatabase.SaveAssets();
         }
 
         public void Load(MainDialogueAsset mainDialogueAsset)

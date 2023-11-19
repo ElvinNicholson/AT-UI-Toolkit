@@ -45,6 +45,7 @@ namespace DialogueEditor
         {
             // Create Asset
             SingleNodeAsset asset = ScriptableObject.CreateInstance<SingleNodeAsset>();
+            asset.name = dialogueTitle;
             asset.title = dialogueTitle;
             asset.text = dialogueText;
             asset.type = dialogueType;

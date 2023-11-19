@@ -140,6 +140,7 @@ namespace DialogueEditor
         public override DialogueNodeAsset Save()
         {
             ReplyNodeAsset asset = ScriptableObject.CreateInstance<ReplyNodeAsset>();
+            asset.name = dialogueTitle;
             asset.title = dialogueTitle;
             asset.text = dialogueText;
             asset.type = dialogueType;
