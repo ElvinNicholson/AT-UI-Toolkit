@@ -6,14 +6,6 @@ using System.Collections.Generic;
 
 namespace DialogueEditor
 {
-    public enum DialogueNodeType
-    {
-        SINGLE,
-        REPLY,
-        START,
-        END
-    }
-
     public class DialogueNode : Node
     {
         public string dialogueTitle;

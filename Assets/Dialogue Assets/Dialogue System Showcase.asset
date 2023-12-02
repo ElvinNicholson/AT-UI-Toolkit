@@ -1,0 +1,147 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8877940169691348243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa6de5fe8d0e53541973953b60cf890f, type: 3}
+  m_Name: wdawda
+  m_EditorClassIdentifier: 
+  title: wdawda
+  text: Single 1
+  type: 0
+  nodeID: ccd98546-d986-4716-bca1-8dabf977a27a
+  position:
+    serializedVersion: 2
+    x: 584
+    y: 193.33334
+    width: 242
+    height: 130.66667
+  nextNode: {fileID: -7310859885076800944}
+  nextNodeID: bfa71064-5ff5-480b-baa3-ee1cff3a01a6
+--- !u!114 &-8720783960897251655
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa6de5fe8d0e53541973953b60cf890f, type: 3}
+  m_Name: dsadaww
+  m_EditorClassIdentifier: 
+  title: dsadaww
+  text: Single 3
+  type: 0
+  nodeID: 7e5fcdeb-91e5-475d-89b9-2fe016f5316a
+  position:
+    serializedVersion: 2
+    x: 891.3334
+    y: 567.3334
+    width: 241.99994
+    height: 130.66663
+  nextNode: {fileID: -7310859885076800944}
+  nextNodeID: bfa71064-5ff5-480b-baa3-ee1cff3a01a6
+--- !u!114 &-7310859885076800944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e883067d5ce22748aa1ee9d63007d41, type: 3}
+  m_Name: sadawda
+  m_EditorClassIdentifier: 
+  title: sadawda
+  text: Reply 2
+  type: 1
+  nodeID: bfa71064-5ff5-480b-baa3-ee1cff3a01a6
+  position:
+    serializedVersion: 2
+    x: 904.6667
+    y: 193.33334
+    width: 176
+    height: 313.3333
+  replies:
+  - replyText: Reply 1
+    nextNode: {fileID: 3090675993797176532}
+    nextNodeID: e851e5d0-ebbc-48c3-9f2b-2c5bf5f49820
+  - replyText: Reply 2
+    nextNode: {fileID: 3090675993797176532}
+    nextNodeID: e851e5d0-ebbc-48c3-9f2b-2c5bf5f49820
+  - replyText: Reply 3
+    nextNode: {fileID: -8720783960897251655}
+    nextNodeID: 7e5fcdeb-91e5-475d-89b9-2fe016f5316a
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d35809705f67c94ea1790d461ff513a, type: 3}
+  m_Name: Dialogue System Showcase
+  m_EditorClassIdentifier: 
+  dialogueNodeAssets:
+  - {fileID: 7965240281647591564}
+  - {fileID: 3090675993797176532}
+  - {fileID: -8877940169691348243}
+  - {fileID: -8720783960897251655}
+  - {fileID: -7310859885076800944}
+  firstNode: {fileID: -8877940169691348243}
+--- !u!114 &3090675993797176532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45ae2b609ca80e44b9509beba03e0784, type: 3}
+  m_Name: End Dialogue
+  m_EditorClassIdentifier: 
+  title: End Dialogue
+  text: 
+  type: 3
+  nodeID: e851e5d0-ebbc-48c3-9f2b-2c5bf5f49820
+  position:
+    serializedVersion: 2
+    x: 1333.3333
+    y: 303.3333
+    width: 144
+    height: 78.66669
+--- !u!114 &7965240281647591564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa6de5fe8d0e53541973953b60cf890f, type: 3}
+  m_Name: Start Dialogue
+  m_EditorClassIdentifier: 
+  title: Start Dialogue
+  text: 
+  type: 2
+  nodeID: 3d10e1ba-4ce4-463c-8ca8-367b0b416585
+  position:
+    serializedVersion: 2
+    x: 326
+    y: 193.33334
+    width: 149.33331
+    height: 78.66667
+  nextNode: {fileID: 0}
+  nextNodeID: ccd98546-d986-4716-bca1-8dabf977a27a
