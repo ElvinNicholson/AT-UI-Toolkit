@@ -1,0 +1,249 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8705238448551332918
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa6de5fe8d0e53541973953b60cf890f, type: 3}
+  m_Name: Katheryne
+  m_EditorClassIdentifier: 
+  title: Katheryne
+  text: Haha. I wonder?
+  type: 0
+  nodeID: 8c4a5567-a7bc-480a-a1a3-1cd802a3c647
+  position:
+    serializedVersion: 2
+    x: 811.3334
+    y: 367.3333
+    width: 241.99994
+    height: 130.66666
+  nextNode: {fileID: 3916433064846091205}
+  nextNodeID: 74554367-88dd-4e4b-816b-8d37925043a6
+--- !u!114 &-5828371912924888418
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa6de5fe8d0e53541973953b60cf890f, type: 3}
+  m_Name: Katheryne
+  m_EditorClassIdentifier: 
+  title: Katheryne
+  text: Farewell, Adventurer, and thank you for supporting the Adventurers' Guild.
+  type: 0
+  nodeID: 9cee00a6-12b3-4732-ad10-4a0a4cec83f7
+  position:
+    serializedVersion: 2
+    x: 811.3334
+    y: 514
+    width: 446.6667
+    height: 130.66669
+  nextNode: {fileID: 2464183238182191249}
+  nextNodeID: 9c40b313-e269-4b3f-9493-285030a56f6c
+--- !u!114 &-4511838583082591838
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa6de5fe8d0e53541973953b60cf890f, type: 3}
+  m_Name: Katheryne
+  m_EditorClassIdentifier: 
+  title: Katheryne
+  text: I am Katheryne, the receptionist of the Adventurers' Guild. My job is to
+    provide adventurers with quest and intelligence support.
+  type: 0
+  nodeID: 163b09e0-7ca3-43a3-bd32-4c28bedcbfc4
+  position:
+    serializedVersion: 2
+    x: 1092.6666
+    y: 200.66667
+    width: 632
+    height: 130.66666
+  nextNode: {fileID: -3971250521387259794}
+  nextNodeID: 60b3c637-354c-490a-a37a-219e5c4c300e
+--- !u!114 &-3971250521387259794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa6de5fe8d0e53541973953b60cf890f, type: 3}
+  m_Name: Katheryne
+  m_EditorClassIdentifier: 
+  title: Katheryne
+  text: May my services be of help to you, and may your journey in Fontaine be a
+    memorable one.
+  type: 0
+  nodeID: 60b3c637-354c-490a-a37a-219e5c4c300e
+  position:
+    serializedVersion: 2
+    x: 1794
+    y: 200.66667
+    width: 529.3334
+    height: 130.66666
+  nextNode: {fileID: 2464183238182191249}
+  nextNodeID: 9c40b313-e269-4b3f-9493-285030a56f6c
+--- !u!114 &-2656810405792263048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa6de5fe8d0e53541973953b60cf890f, type: 3}
+  m_Name: Start Dialogue
+  m_EditorClassIdentifier: 
+  title: Start Dialogue
+  text: 
+  type: 2
+  nodeID: a5e6bf52-2a2e-48a5-b5a4-e1f1489556f0
+  position:
+    serializedVersion: 2
+    x: 146.66667
+    y: 200.66667
+    width: 149.33334
+    height: 78.66666
+  nextNode: {fileID: 0}
+  nextNodeID: 3a3ee4d7-acf2-4435-978e-dcc32097019e
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0d35809705f67c94ea1790d461ff513a, type: 3}
+  m_Name: Not Genshin
+  m_EditorClassIdentifier: 
+  dialogueNodeAssets:
+  - {fileID: -2656810405792263048}
+  - {fileID: 7563769001031101340}
+  - {fileID: 828636823025250265}
+  - {fileID: -4511838583082591838}
+  - {fileID: -3971250521387259794}
+  - {fileID: -8705238448551332918}
+  - {fileID: 3916433064846091205}
+  - {fileID: -5828371912924888418}
+  - {fileID: 2464183238182191249}
+  firstNode: {fileID: 7563769001031101340}
+--- !u!114 &828636823025250265
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa6de5fe8d0e53541973953b60cf890f, type: 3}
+  m_Name: Katheryne
+  m_EditorClassIdentifier: 
+  title: Katheryne
+  text: Hello there. The pleasure is mine.
+  type: 0
+  nodeID: cd4f2518-8559-4e59-9ef6-86c63cc81fa9
+  position:
+    serializedVersion: 2
+    x: 811.3334
+    y: 200.66667
+    width: 241.99994
+    height: 130.66666
+  nextNode: {fileID: -4511838583082591838}
+  nextNodeID: 163b09e0-7ca3-43a3-bd32-4c28bedcbfc4
+--- !u!114 &2464183238182191249
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45ae2b609ca80e44b9509beba03e0784, type: 3}
+  m_Name: End Dialogue
+  m_EditorClassIdentifier: 
+  title: End Dialogue
+  text: 
+  type: 3
+  nodeID: 9c40b313-e269-4b3f-9493-285030a56f6c
+  position:
+    serializedVersion: 2
+    x: 2397.3335
+    y: 367.3333
+    width: 144
+    height: 78.66669
+--- !u!114 &3916433064846091205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa6de5fe8d0e53541973953b60cf890f, type: 3}
+  m_Name: Katheryne
+  m_EditorClassIdentifier: 
+  title: Katheryne
+  text: Do I appear like a masterpice of the Fontaine Research Institute to some?
+  type: 0
+  nodeID: 74554367-88dd-4e4b-816b-8d37925043a6
+  position:
+    serializedVersion: 2
+    x: 1092.6666
+    y: 367.3333
+    width: 440
+    height: 130.66666
+  nextNode: {fileID: 2464183238182191249}
+  nextNodeID: 9c40b313-e269-4b3f-9493-285030a56f6c
+--- !u!114 &7563769001031101340
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7e883067d5ce22748aa1ee9d63007d41, type: 3}
+  m_Name: Katheryne
+  m_EditorClassIdentifier: 
+  title: Katheryne
+  text: Ad astra abyssosque! Welcome to the Adventurers' Guild.
+  type: 1
+  nodeID: 3a3ee4d7-acf2-4435-978e-dcc32097019e
+  position:
+    serializedVersion: 2
+    x: 383.3333
+    y: 200.66667
+    width: 372.00003
+    height: 313.3333
+  replies:
+  - replyText: We meet again, Katheryne.
+    nextNode: {fileID: 828636823025250265}
+    nextNodeID: cd4f2518-8559-4e59-9ef6-86c63cc81fa9
+  - replyText: Are you also a clockwork puppet, Katheryne?
+    nextNode: {fileID: -8705238448551332918}
+    nextNodeID: 8c4a5567-a7bc-480a-a1a3-1cd802a3c647
+  - replyText: See you.
+    nextNode: {fileID: -5828371912924888418}
+    nextNodeID: 9cee00a6-12b3-4732-ad10-4a0a4cec83f7

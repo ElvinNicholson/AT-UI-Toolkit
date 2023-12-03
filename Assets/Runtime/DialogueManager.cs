@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace DialogueEditor
@@ -15,8 +13,6 @@ namespace DialogueEditor
         private void Start()
         {
             selectedReply = 0;
-            currentNode = dialogueAsset.firstNode;
-            dialogueUI.DisplayText(currentNode.text);
         }
 
         private void Update()
@@ -25,11 +21,27 @@ namespace DialogueEditor
             {
                 NextNode();
             }
+
+            if (Input.GetKeyDown(KeyCode.F))
+            {
+                StartDialogue();
+            }
+        }
+
+        public void StartDialogue()
+        {
+            dialogueUI.gameObject.SetActive(true);
+            currentNode = dialogueAsset.firstNode;
+            DisplayCurrentNode();
+        }
+
+        public void ExitDialogue()
+        {
+            dialogueUI.gameObject.SetActive(false);
         }
 
         private void NextNode()
         {
-            // Get next node
             switch (currentNode.type)
             {
                 case DialogueNodeType.SINGLE:
@@ -43,6 +55,11 @@ namespace DialogueEditor
                     break;
             }
 
+            DisplayCurrentNode();
+        }
+
+        private void DisplayCurrentNode()
+        {
             switch (currentNode.type)
             {
                 case DialogueNodeType.REPLY:
@@ -50,12 +67,11 @@ namespace DialogueEditor
                     break;
 
                 case DialogueNodeType.END:
-                    Debug.Log("End Dialogue");
-                    dialogueUI.DisplayText("END OF DIALOGUE");
+                    ExitDialogue();
                     return;
             }
 
-            dialogueUI.DisplayText(currentNode.text);
+            dialogueUI.DisplayText(currentNode.title, currentNode.text);
         }
 
         public void SetSelectedReply(int replyIndex)
