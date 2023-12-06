@@ -659,6 +659,7 @@ MonoBehaviour:
   dialogueText: {fileID: 1094936353}
   replyButtonPrefab: {fileID: 6147725138722366145, guid: 00d4bcd1f83ec6342b9786646b9b5c1a, type: 3}
   replyButtonParent: {fileID: 468086140}
+  timePerChar: 0.03
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0

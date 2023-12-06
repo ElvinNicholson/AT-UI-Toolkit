@@ -17,14 +17,23 @@ namespace DialogueEditor
 
         private void Update()
         {
-            if (Input.GetMouseButtonDown(0) && currentNode.type != DialogueNodeType.REPLY)
-            {
-                NextNode();
-            }
-
             if (Input.GetKeyDown(KeyCode.F))
             {
                 StartDialogue();
+            }
+
+            if (!dialogueUI.gameObject.activeSelf)
+            {
+                return;
+            }
+
+            if (Input.GetMouseButtonDown(0) && dialogueUI.IsTyping())
+            {
+                dialogueUI.SkipTyping();
+            }
+            else if (Input.GetMouseButtonDown(0) && currentNode.type != DialogueNodeType.REPLY)
+            {
+                NextNode();
             }
         }
 

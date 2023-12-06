@@ -13,10 +13,19 @@ namespace DialogueEditor
         [SerializeField] private GameObject replyButtonPrefab;
         [SerializeField] private Transform replyButtonParent;
 
+        [Header("Variables")]
+        [SerializeField] private float timePerChar;
+
+        private string currentText;
+        private bool isTyping;
+
         public void DisplayText(string title, string text)
         {
+            StopAllCoroutines();
             dialogueTitle.text = title;
-            dialogueText.text = text;
+            currentText = text;
+
+            StartCoroutine(TypeText(currentText));
         }
 
         public void CreateReplyButton(DialogueManager dialogueManager, ReplyNodeAsset replyNodeAsset)
@@ -35,6 +44,32 @@ namespace DialogueEditor
             {
                 Destroy(child.gameObject);
             }
+        }
+
+        private IEnumerator TypeText(string text)
+        {
+            dialogueText.text = "";
+            isTyping = true;
+
+            foreach (char c in text.ToCharArray())
+            {
+                dialogueText.text += c;
+                yield return new WaitForSeconds(timePerChar);
+            }
+
+            isTyping = false;
+        }
+
+        public void SkipTyping()
+        {
+            StopAllCoroutines();
+            isTyping = false;
+            dialogueText.text = currentText;
+        }
+
+        public bool IsTyping()
+        {
+            return isTyping;
         }
     }
 }
