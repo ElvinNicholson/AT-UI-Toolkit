@@ -6,6 +6,12 @@ using System.Collections.Generic;
 
 namespace DialogueEditor
 {
+    public enum PortType
+    {
+        INPUT,
+        OUTPUT
+    }
+
     public class DialogueNode : Node
     {
         public string dialogueTitle;
@@ -76,9 +82,19 @@ namespace DialogueEditor
             return asset;
         }
 
-        public bool IsInputPortEmpty()
+        public virtual void OnPortConnect(PortType portType)
         {
-            return inputPort.connected;
+
+        }
+
+        public virtual void OnPortDisconnect(PortType portType)
+        {
+            
+        }
+
+        public virtual bool IsAllPortConnected()
+        {
+            return false;
         }
 
         public virtual void DisconnectAllPort()
@@ -98,6 +114,11 @@ namespace DialogueEditor
 
                 graphView.DeleteElements(port.connections);
             }
+        }
+
+        public void SetColorRed()
+        {
+            titleContainer.style.backgroundColor = new StyleColor(new Color(0.8f, 0.2f, 0.2f));
         }
 
         private void OnTitleTextFieldValueChanged(string newValue)

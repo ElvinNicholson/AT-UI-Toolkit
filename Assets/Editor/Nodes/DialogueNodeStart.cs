@@ -77,5 +77,20 @@ namespace DialogueEditor
 
             return asset;
         }
+
+        public override void OnPortConnect(PortType portType)
+        {
+            titleContainer.style.backgroundColor = new StyleColor(new Color(0.2f, 0.2f, 0.2f));
+        }
+
+        public override void OnPortDisconnect(PortType portType)
+        {
+            titleContainer.style.backgroundColor = new StyleColor(new Color(0.8f, 0.2f, 0.2f));
+        }
+
+        public override bool IsAllPortConnected()
+        {
+            return outputPort.connected;
+        }
     }
 }

@@ -16,6 +16,8 @@ namespace DialogueEditor
             AddControls();
 
             OnElementsDeleted();
+
+            graphViewChanged += OnGraphViewChanged;
         }
 
         private void AddStyleSheet()
@@ -110,6 +112,7 @@ namespace DialogueEditor
             }
 
             newNode.Init(this, position);
+            newNode.SetColorRed();
             newNode.Draw();
 
             return newNode;
@@ -251,9 +254,7 @@ namespace DialogueEditor
 
         private void ConnectPorts(Port fromPort, Port toPort)
         {
-            fromPort.ConnectTo(toPort);
-
-            Edge edge = new Edge();
+            Edge edge = fromPort.ConnectTo(toPort);
             edge.output = fromPort;
             edge.input = toPort;
 
@@ -357,6 +358,39 @@ namespace DialogueEditor
                 }
             }
             return false;
+        }
+
+        private GraphViewChange OnGraphViewChanged(GraphViewChange change)
+        {
+            if (change.edgesToCreate != null)
+            {
+                foreach (Edge edge in change.edgesToCreate)
+                {
+                    edge.input.parent.GetFirstOfType<DialogueNode>().OnPortConnect(PortType.INPUT);
+                    edge.output.parent.GetFirstOfType<DialogueNode>().OnPortConnect(PortType.OUTPUT);
+                    //Debug.Log("Edge Created");
+                    //Debug.Log("Input Port: " + edge.input.parent.GetFirstOfType<DialogueNode>().dialogueTitle);
+                    //Debug.Log("Output Port: " + edge.output.parent.GetFirstOfType<DialogueNode>().dialogueTitle);
+                }
+            }
+
+            if (change.elementsToRemove != null)
+            {
+                foreach (GraphElement element in change.elementsToRemove)
+                {
+                    if (element.GetType() == typeof(Edge))
+                    {
+                        Edge edge = element as Edge;
+                        edge.input.parent.GetFirstOfType<DialogueNode>().OnPortDisconnect(PortType.INPUT);
+                        edge.output.parent.GetFirstOfType<DialogueNode>().OnPortDisconnect(PortType.OUTPUT);
+                        //Debug.Log("Edge Removed");
+                        //Debug.Log("Input Port: " + edge.input.parent.GetFirstOfType<DialogueNode>().dialogueTitle);
+                        //Debug.Log("Output Port: " + edge.output.parent.GetFirstOfType<DialogueNode>().dialogueTitle);
+                    }
+                }
+            }
+
+            return change;
         }
     }
 }

@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine.UIElements;
+using System.Linq;
 
 namespace DialogueEditor
 {
@@ -119,6 +120,8 @@ namespace DialogueEditor
         {
             replyList.Add("Dialogue Reply");
             AddChoiceElement(replyList[replyList.Count - 1]);
+
+            titleContainer.style.backgroundColor = new StyleColor(new Color(0.8f, 0.2f, 0.2f));
         }
 
         private void RemoveReply(Port port)
@@ -170,6 +173,95 @@ namespace DialogueEditor
         private void OnReplyTextFieldValueChanged(string newValue, int index)
         {
             replyList[index] = newValue;
+        }
+
+        public override void OnPortConnect(PortType portType)
+        {
+            switch (portType)
+            {
+                case PortType.INPUT:
+                    if (IsAllOutputPortConnected())
+                    {
+                        titleContainer.style.backgroundColor = new StyleColor(new Color(0.2f, 0.2f, 0.2f));
+                    }
+                    break;
+
+                case PortType.OUTPUT:
+                    if (inputPort.connected && IsAllButOnePortConnected())
+                    {
+                        titleContainer.style.backgroundColor = new StyleColor(new Color(0.2f, 0.2f, 0.2f));
+                    }
+                    break;
+            }
+        }
+
+        public override void OnPortDisconnect(PortType portType)
+        {
+            switch (portType)
+            {
+                case PortType.INPUT:
+                    if (inputPort.connections.Count() > 1)
+                    {
+                        return;
+                    }
+                    break;
+
+                case PortType.OUTPUT:
+                    break;
+            }
+
+            titleContainer.style.backgroundColor = new StyleColor(new Color(0.8f, 0.2f, 0.2f));
+        }
+
+        private bool IsAllOutputPortConnected()
+        {
+            bool allOutputConnected = true;
+
+            foreach (Port outputPort in outputPortList)
+            {
+                if (!outputPort.connected)
+                {
+                    allOutputConnected = false;
+                }
+            }
+
+            return allOutputConnected;
+        }
+
+        private bool IsAllButOnePortConnected()
+        {
+            int connectedPorts = 0;
+
+            foreach (Port outputPort in outputPortList)
+            {
+                if (outputPort.connected)
+                {
+                    connectedPorts += 1;
+                }
+            }
+
+            if (connectedPorts == outputPortList.Count - 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public override bool IsAllPortConnected()
+        {
+            bool outputConnected = true;
+            foreach (Port outputPort in outputPortList)
+            {
+                if (!outputPort.connected)
+                {
+                    outputConnected = false;
+                }
+            }
+
+            return (inputPort.connected && outputConnected);
         }
     }
 }

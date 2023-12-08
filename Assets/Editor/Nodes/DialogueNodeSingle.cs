@@ -1,5 +1,7 @@
 using UnityEngine;
 using UnityEditor.Experimental.GraphView;
+using UnityEngine.UIElements;
+using System.Linq;
 
 namespace DialogueEditor
 {
@@ -62,6 +64,49 @@ namespace DialogueEditor
             }
 
             return asset;
+        }
+
+        public override void OnPortConnect(PortType portType)
+        {
+            switch (portType)
+            {
+                case PortType.INPUT:
+                    if (outputPort.connected)
+                    {
+                        titleContainer.style.backgroundColor = new StyleColor(new Color(0.2f, 0.2f, 0.2f));
+                    }
+                    break;
+
+                case PortType.OUTPUT:
+                    if (inputPort.connected)
+                    {
+                        titleContainer.style.backgroundColor = new StyleColor(new Color(0.2f, 0.2f, 0.2f));
+                    }
+                    break;
+            } 
+        }
+
+        public override void OnPortDisconnect(PortType portType)
+        {
+            switch (portType)
+            {
+                case PortType.INPUT:
+                    if (inputPort.connections.Count() > 1)
+                    {
+                        return;
+                    }
+                    break;
+
+                case PortType.OUTPUT:
+                    break;
+            }    
+
+            titleContainer.style.backgroundColor = new StyleColor(new Color(0.8f, 0.2f, 0.2f));
+        }
+
+        public override bool IsAllPortConnected()
+        {
+            return (inputPort.connected && outputPort.connected);
         }
     }
 }
