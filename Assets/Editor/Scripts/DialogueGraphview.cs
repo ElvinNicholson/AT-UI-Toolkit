@@ -120,10 +120,20 @@ namespace DialogueEditor
 
         public void Save(string filename)
         {
+            List<DialogueNode> nodes = this.Query<DialogueNode>().ToList();
+
+            foreach (DialogueNode node in nodes)
+            {
+                if (!node.IsAllPortConnected())
+                {
+                    Debug.LogError("Cannot save when there is an unconnected node.");
+                    return;
+                }
+            }
+
             MainDialogueAsset mainAssetInstance = ScriptableObject.CreateInstance<MainDialogueAsset>();
             AssetDatabase.CreateAsset(mainAssetInstance, $"Assets/Dialogue Assets/{filename}.asset");
 
-            List<DialogueNode> nodes = this.Query<DialogueNode>().ToList();
             string firstNodeID = "";
 
             // Save DialogueNodeAssets to dialogueNodeAssets List
@@ -368,9 +378,6 @@ namespace DialogueEditor
                 {
                     edge.input.parent.GetFirstOfType<DialogueNode>().OnPortConnect(PortType.INPUT);
                     edge.output.parent.GetFirstOfType<DialogueNode>().OnPortConnect(PortType.OUTPUT);
-                    //Debug.Log("Edge Created");
-                    //Debug.Log("Input Port: " + edge.input.parent.GetFirstOfType<DialogueNode>().dialogueTitle);
-                    //Debug.Log("Output Port: " + edge.output.parent.GetFirstOfType<DialogueNode>().dialogueTitle);
                 }
             }
 
@@ -383,9 +390,6 @@ namespace DialogueEditor
                         Edge edge = element as Edge;
                         edge.input.parent.GetFirstOfType<DialogueNode>().OnPortDisconnect(PortType.INPUT);
                         edge.output.parent.GetFirstOfType<DialogueNode>().OnPortDisconnect(PortType.OUTPUT);
-                        //Debug.Log("Edge Removed");
-                        //Debug.Log("Input Port: " + edge.input.parent.GetFirstOfType<DialogueNode>().dialogueTitle);
-                        //Debug.Log("Output Port: " + edge.output.parent.GetFirstOfType<DialogueNode>().dialogueTitle);
                     }
                 }
             }
