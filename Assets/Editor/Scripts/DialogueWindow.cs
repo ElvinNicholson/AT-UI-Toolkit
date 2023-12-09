@@ -3,7 +3,7 @@ using UnityEngine.UIElements;
 using UnityEditor.UIElements;
 using UnityEditor;
 using UnityEditor.Experimental.GraphView;
-using System;
+using System.IO;
 
 namespace DialogueEditor
 {
@@ -80,6 +80,9 @@ namespace DialogueEditor
             }
 
             string relativePath = "Assets" + absolutePath.Substring(Application.dataPath.Length);
+            fileName = Path.GetFileName(relativePath);
+            fileName = fileName.Substring(0, fileName.Length - 6);
+
             MainDialogueAsset mainDialogueAsset = GetAssetFromDatabase<MainDialogueAsset>(relativePath);
             DialogueGraphview graphView = rootVisualElement.Query<DialogueGraphview>();
             graphView.Load(mainDialogueAsset);
