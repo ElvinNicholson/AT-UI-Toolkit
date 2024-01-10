@@ -101,7 +101,7 @@ namespace DialogueEditor
             replyTextField.AddToClassList("de-node__reply-text-field");
             replyTextField.AddToClassList("de-node__text-field__hidden");
             replyTextField.value = dialogue;
-            replyTextField.RegisterValueChangedCallback(evt => OnReplyTextFieldValueChanged(evt.newValue, index));
+            replyTextField.RegisterValueChangedCallback(evt => OnReplyValueChanged(evt.newValue, index));
 
             // Output Port
             Port outputPort = InstantiatePort(Orientation.Horizontal, Direction.Output, Port.Capacity.Single, typeof(bool));
@@ -170,7 +170,7 @@ namespace DialogueEditor
             return asset;
         }
 
-        private void OnReplyTextFieldValueChanged(string newValue, int index)
+        private void OnReplyValueChanged(string newValue, int index)
         {
             replyList[index] = newValue;
         }

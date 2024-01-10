@@ -58,7 +58,7 @@ namespace DialogueEditor
             titleTextField.AddToClassList("de-node__text-field");
             titleTextField.AddToClassList("de-node__title-text-field");
             titleTextField.AddToClassList("de-node__text-field__hidden");
-            titleTextField.RegisterValueChangedCallback(evt => OnTitleTextFieldValueChanged(evt.newValue));
+            titleTextField.RegisterValueChangedCallback(evt => OnTitleValueChanged(evt.newValue));
             titleContainer.Insert(0, titleTextField);
 
             // Input Port
@@ -72,7 +72,7 @@ namespace DialogueEditor
             dialogueTextField.AddToClassList("de-node__text-field");
             dialogueTextField.AddToClassList("de-node__dialogue-text-field");
             dialogueTextField.AddToClassList("de-node__text-field__hidden");
-            dialogueTextField.RegisterValueChangedCallback(evt => OnDialogueTextTextFieldValueChanged(evt.newValue));
+            dialogueTextField.RegisterValueChangedCallback(evt => OnDialogueValueChanged(evt.newValue));
             extensionContainer.Add(dialogueTextField);
         }
 
@@ -121,12 +121,12 @@ namespace DialogueEditor
             titleContainer.style.backgroundColor = new StyleColor(new Color(0.8f, 0.2f, 0.2f));
         }
 
-        private void OnTitleTextFieldValueChanged(string newValue)
+        private void OnTitleValueChanged(string newValue)
         {
             dialogueTitle = newValue;
         }
 
-        private void OnDialogueTextTextFieldValueChanged(string newValue)
+        private void OnDialogueValueChanged(string newValue)
         {
             dialogueText = newValue;
         }
